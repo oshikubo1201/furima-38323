@@ -29,11 +29,11 @@ has_many :purchase_records
 |-----------------------|------------|-------------------------------|
 |items_name             | string     | null: false                   |
 |explanation            | text       | null: false                   |  
-|category               | integer    | null: false                   |
-|situation              | integer    | null: false                   |
-|delivery_charge        | integer    | null: false                   |
-|shipping_location      | integer    | null: false                   |
-|days_to_ship           | integer    | null: false                   |
+|category_id            | integer    | null: false                   |
+|situation_id           | integer    | null: false                   |
+|delivery_charge_id     | integer    | null: false                   |
+|prefecture_id          | integer    | null: false                   |
+|days_to_ship_id        | integer    | null: false                   |
 |price                  | integer    | null: false                   | 
 |user                   | references | null: false, foreign_key: true|
 
@@ -46,7 +46,7 @@ has_one :purchase_record
 belongs_to :category
 belongs_to :situation
 belongs_to :delivery_charge
-belongs_to :shipping_location
+belongs_to :prefecture
 belongs_to :days_to_ship
 
 ＃＃purchase_recordsテーブル
@@ -68,14 +68,13 @@ has_one :shipping_address
 |Colmun              | Type       | option                        |
 |--------------------|------------|-------------------------------|--
 |post_code           | string     | null: false                   |
-|prefecture          | integer    | null: false                   | 
+|prefecture_id       | integer    | null: false                   | 
 |municipalitie       | string     | null: false                   |
 |address             | string     | null: false                   |
 |building            | string     |                               |
 |telephone           | string     | null: false                   |
-|purchase_record_id  | references | null: false, foreign_key: true|
+|purchase_record     | references | null: false, foreign_key: true|
 
 
 ###association
 belongs_to :purchase_record
-belongs_to :prefecture
