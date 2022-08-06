@@ -4,18 +4,16 @@
 
 ＃＃usersテーブル
 
-|Colmun              | Type    | option     |
-|--------------------|---------|------------|-----
-|email               | string  | null: false|
-|encrypted_password  | string  | null: false| 
-|nickname            | string  | null: false|
-|last_name           | string  | null: false|
-|first_name          | string  | null: false|
-|last_name_kana      | string  | null: false|
-|first_name_kana     | string  | null: false|
-|birthday_year       | string  | null: false| 
-|birthday_month      | string  | null: false|
-|birthday_day        | string  | null: false|
+|Colmun              | Type    | option                   |
+|--------------------|---------|--------------------------|-----
+|email               | string  | null: false, unique: true|
+|encrypted_password  | string  | null: false              | 
+|nickname            | string  | null: false              | 
+|last_name           | string  | null: false              |
+|first_name          | string  | null: false              |
+|last_name_kana      | string  | null: false              |
+|first_name_kana     | string  | null: false              |
+|birthday            | date    | null: false              |  
 
 
 
@@ -27,30 +25,35 @@ has_many :purchase_records
 
 ＃＃itemsテーブル
 
-|Colmun              | Type       | option     |
-|--------------------|------------|------------|-----
-|items_name          | string     | null: false|
-|explanation         | text       | null: false| 
-|category            | string     | null: false|
-|situation           | string     | null: false|
-|delivery_charge     | string     | null: false|
-|shipping_location   | string     | null: false|
-|days_to_ship        | string     | null: false|
-|price               | integer    | null: false| 
-|user                | references | null: false|
+|Colmun                 | Type       | option                        | 
+|-----------------------|------------|-------------------------------|
+|items_name             | string     | null: false                   |
+|explanation            | text       | null: false                   |  
+|category_id            | references | null: false, foreign_key: true|
+|situation_id           | references | null: false, foreign_key: true|
+|delivery_charge_id     | references | null: false, foreign_key: true|
+|shipping_location_id   | references | null: false, foreign_key: true|
+|days_to_ship_id        | references | null: false, foreign_key: true|
+|price                  | integer    | null: false                   | 
+|user_id                | references | null: false, foreign_key: true|
 
 
 
 ###association
 belongs_to :user
 has_one :purchase_record
+belongs_to :category_id
+belongs_to :situation_id
+belongs_to :delivery_charge_id
+belongs_to :shipping_location_id
+belongs_to :days_to_ship_id
 
 ＃＃purchase_recordsテーブル
 
 |Colmun              | Type       | option                        |
 |--------------------|------------|-------------------------------|-
-|user                | references | null: false, foreign_key: true|
-|item                | references | null: false, foreign_key: true|
+|user_id             | references | null: false, foreign_key: true|
+|item_id             | references | null: false, foreign_key: true|
 
 
 ###association
@@ -63,14 +66,15 @@ has_one :shipping_address
 
 |Colmun              | Type       | option                        |
 |--------------------|------------|-------------------------------|--
-|post_code           | integer    | null: false                   |
-|prefecture          | string     | null: false                   | 
+|post_code           | string     | null: false                   |
+|prefecture_id       | string     | null: false, foreign_key: true| 
 |municipalitie       | string     | null: false                   |
-|address             | integer    | null: false                   |
-|building            | string     | null: false                   |
-|telephone           | integer    | null: false                   |
-|purchase_record     | references | null: false, foreign_key: true|
+|address             | string     | null: false                   |
+|building            | string     |                               |
+|telephone           | string     | null: false                   |
+|purchase_record_id  | references | null: false, foreign_key: true|
 
 
 ###association
 belongs_to :purchase_record
+belongs_to :prefecture_id
