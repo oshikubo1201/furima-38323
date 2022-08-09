@@ -1,4 +1,4 @@
-class Days_to_ship < ActiveHash::Base
+class DaysToShip < ActiveHash::Base
   self.data = [
     { id: 1, name: '---' },
     { id: 2, name: '1~2日で発送' },
@@ -8,5 +8,4 @@ class Days_to_ship < ActiveHash::Base
 
   include ActiveHash::Associations
   has_many :items
-  validates :days_to_ship_id, numericality: { other_than: 1 , message: "can't be blank"}
 end
