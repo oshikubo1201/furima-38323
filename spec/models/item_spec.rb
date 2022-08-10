@@ -13,7 +13,7 @@ RSpec.describe Item, type: :model do
       end
     end
     context '商品出品できないとき' do
-      it 'nicknameが空では登録できない' do
+      it 'imageが空では登録できない' do
         @item.image = nil 
         @item.valid?
         expect(@item.errors.full_messages).to include("Image can't be blank")
@@ -37,8 +37,20 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
 
+      it 'categoryが「---」では登録できない' do
+        @item.category_id = 1 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category can't be blank")
+      end
+
       it 'situationが空では登録できない' do
         @item.situation_id = "" 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Situation can't be blank")
+      end
+
+      it 'situationが「---」では登録できない' do
+        @item.situation_id = 1 
         @item.valid?
         expect(@item.errors.full_messages).to include("Situation can't be blank")
       end
@@ -49,14 +61,32 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Delivery charge can't be blank")
       end
 
+      it 'delivery_chargeが「---」では登録できない' do
+        @item.delivery_charge_id = 1 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Delivery charge can't be blank")
+      end
+
       it 'prefectureが空では登録できない' do
         @item.prefecture_id = "" 
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
 
+      it 'prefectureが「---」では登録できない' do
+        @item.prefecture_id = 1 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+      end
+
       it 'days_to_shipが空では登録できない' do
         @item.days_to_ship_id = "" 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Days to ship can't be blank")
+      end
+
+      it 'days_to_shipが「---」では登録できない' do
+        @item.days_to_ship_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Days to ship can't be blank")
       end
@@ -83,6 +113,12 @@ RSpec.describe Item, type: :model do
         @item.price = '１０００'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+
+      it 'userと結びついてないと登録できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
 
     end
