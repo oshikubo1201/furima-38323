@@ -5,10 +5,12 @@ class Item < ApplicationRecord
   belongs_to :delivery_charge
   belongs_to :prefecture
   belongs_to :days_to_ship
+  
 
   belongs_to :user
   has_one_attached :image
-  
+  has_one :purchase_record
+
   validates :image     , presence: true
   validates :items_name, presence: true 
   validates :explanation, presence: true
