@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!, only: :create
   def index
     # Formオブジェクトのインスタンスを作成して、インスタンス変数に代入する
     @item = Item.find(params[:item_id])
@@ -6,12 +7,14 @@ class OrdersController < ApplicationController
   end
   
   def create
+    @item = Item.find(params[:item_id])
     @order = Order.new(purchase_params)
     if @order.valid?
       @order.save
       redirect_to root_path
     else
-      render :new
+      @item = Item.find(params[:item_id])
+      render :index
     end
   end
   
