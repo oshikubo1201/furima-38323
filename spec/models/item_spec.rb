@@ -37,7 +37,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
 
-      it 'categoryが「---」では登録できない' do
+      it 'categoryがçでは登録できない' do
         @item.category_id = 1 
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
