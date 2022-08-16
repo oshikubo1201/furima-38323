@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, only: :create
-  before_action :set_protect, only: [:index]
+  before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_protect, only: :index
   def index
     # Formオブジェクトのインスタンスを作成して、インスタンス変数に代入する
     @item = Item.find(params[:item_id])
@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
 
   def set_protect
     @item = Item.find(params[:item_id])
-    unless user_signed_in? && @item.purchase_record == nil
+    unless  @item.purchase_record == nil
       redirect_to root_path
     end
   end
