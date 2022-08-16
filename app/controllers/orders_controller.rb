@@ -1,14 +1,13 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
   before_action :set_protect, only: :index
+  before_action :set_item, only: [:index, :create]
   def index
     # Formオブジェクトのインスタンスを作成して、インスタンス変数に代入する
-    @item = Item.find(params[:item_id])
     @order = Order.new
   end
   
   def create
-    @item = Item.find(params[:item_id])
     @order = Order.new(purchase_params)
     if @order.valid?
       pay_item
@@ -37,19 +36,16 @@ class OrdersController < ApplicationController
 
   def set_protect
     @item = Item.find(params[:item_id])
-    unless  @item.purchase_record == nil
+    unless  @item.purchase_record == nil && @item.user.id != current_user.id 
       redirect_to root_path
     end
   end
 
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
 
-  # def purchase_record_params
-  #   params.merge(user_id: current_user.id, item_id:@item.id)
-  # end
-
-  # def shipping_address_params
-  #   params.permit(:post_code, :prefecture_id, :municipalitie, :address, :building, :telephone).merge(purchase_record_id: @purchase_record.id)
-  # end
+  
 
 end

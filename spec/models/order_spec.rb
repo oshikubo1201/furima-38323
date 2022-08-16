@@ -69,6 +69,12 @@ RSpec.describe Order, type: :model do
         @order.valid?
         expect(@order.errors.full_messages).to include("Token can't be blank")
       end
+      it "userが紐付いていないと登録できないこと" do
+        @order.user_id = ""
+        @order.valid?
+        expect(@order.errors.full_messages).to include("User can't be blank")
+      end
+
 
 
 
