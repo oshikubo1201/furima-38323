@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: :create
+  before_action :set_protect, only: [:index]
   def index
     # Formオブジェクトのインスタンスを作成して、インスタンス変数に代入する
     @item = Item.find(params[:item_id])
@@ -33,6 +34,14 @@ class OrdersController < ApplicationController
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
   end
+
+  def set_protect
+    @item = Item.find(params[:item_id])
+    unless user_signed_in? && @item.purchase_record == nil
+      redirect_to root_path
+    end
+  end
+
 
 
   # def purchase_record_params

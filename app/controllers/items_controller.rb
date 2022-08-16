@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
   end
 
   def set_protect
-    unless user_signed_in? && @item.user.id == current_user.id
+    unless user_signed_in? && @item.user.id == current_user.id &&  @item.purchase_record == nil
       redirect_to action: :index
     end
   end
